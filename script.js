@@ -15,6 +15,9 @@ function addR() {
         };
         row.appendChild(col);
         grid.appendChild(row);
+	row.appendChild(col);
+        grid.appendChild(row);
+
 
     }
 }
@@ -27,6 +30,7 @@ function addC() {
 
 //Removes a row
 function removeR() {
+    document.getElementById("grid").deleteRow(0);
     alert("Clicked Remove Row")
 }
 //Remove a column
