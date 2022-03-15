@@ -37,10 +37,10 @@ function addR() {
 function addC() {
     //alert("Clicked Add Col")
     let grid = document.getElementById("grid");
-    let cols = document.getElementsByTagName("td");
-    console.log(cols.length); 
-
-    if (cols.length === 0) {
+    let rows = document.getElementsByTagName("tr");
+    console.log(rows.length);
+    
+    if (rows.length === 0) {
         let row = document.createElement("tr");
         let col = document.createElement("td");
         col.onclick = function (){
@@ -49,9 +49,13 @@ function addC() {
         row.appendChild(col);
         grid.appendChild(row);
     }
-
+    //for loop going to each row and adding a cell "looks like adding a col"
     else{
-        
+	    let cols = grid.rows[0].cells.length;
+	    let newcell;
+	    for(var i=0;i<grid.rows.length;i++){
+		    newcell = grid.rows[i].insertCell(cols-1);
+    	}
     }
     
 
@@ -62,7 +66,7 @@ function addC() {
 
 //Removes a row
 function removeR() {
-    document.getElementById("grid").deleteRow(0);
+    //document.getElementById("grid").deleteRow(0);
     alert("Clicked Remove Row")
 }
 //Remove a column
