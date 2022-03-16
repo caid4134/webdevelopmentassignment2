@@ -1,11 +1,15 @@
 let colorSelected; 
 
 //Adds a row
+
+th.onclick = function (){
+    this.style.backgroundColor = colorSelected;
+  };
 function addR() {
     //alert("Clicked Add Row")
     let grid = document.getElementById("grid");
     let rows = document.getElementsByTagName("tr");
-    console.log(rows.length);
+    //console.log(rows.length);
     
     if (rows.length === 0) {
         let row = document.createElement("tr");
@@ -17,20 +21,28 @@ function addR() {
         grid.appendChild(row);
     }
 
-    //copy last row of the grid table
+    //copy last row of the grid table to add as a new row
     else{
         let lastrow = document.getElementById("grid").lastChild;
-        console.log(lastrow);
+        //console.log(lastrow);
         //creating a new row
         let newrow = document.createElement("tr");
         
-        newrow.innerHTML = lastrow.innerHTML;
+        newrow.innerHTML += lastrow.innerHTML;
+
+        //cleaning the style background color that can be potentially copied over, this is could had been avoided
+        //if i implemented the addrow function diffently
+        var newcells = newrow.children;
+        for (let i = 0; i < newcells.length; i++) {
+            let tableChild = newcells[i];
+            tableChild.style.backgroundColor="";
+            }
+
         //appending copied row
         grid.appendChild(newrow);
 
+
     }
-
-
 
 }
 //Adds a column
@@ -51,10 +63,9 @@ function addC() {
     }
     //for loop going to each row and adding a cell "looks like adding a col"
     else{
-	    let cols = grid.rows[0].cells.length;
 	    let newcell;
-	    for(var i=0;i<grid.rows.length;i++){
-		    newcell = grid.rows[i].insertCell(cols-1);
+	    for(let i=0;i<grid.rows.length;i++){
+		    newcell = grid.rows[i].insertCell(-1);
     	}
     }
     
@@ -98,26 +109,60 @@ function removeC() {
 
     let cols = grid.rows[0].cells.length;
 	    let deletedcell;
-	    for(var i=0;i<grid.rows.length;i++){
+	    for(let i=0;i<grid.rows.length;i++){
 		    deletedcell = grid.rows[i].deleteCell(-1);
     	}
     }
 
 
-//sets global var for selected color
+//sets global let for selected color
 function selected(){
     colorSelected = document.getElementById("selectedID").value;
     console.log(colorSelected);
 }
 
+//onclick will change color of any TD/cell
+function colorclick(event) { 
+	
+	if(event.target.nodeName==="TD"){
+  		event.target.style.backgroundColor=colorSelected;
+        }
+}
 function fill(){
-    alert("Clicked Fill All")
+    //simple loop going through every cell to change their style
+    let grid = document.getElementById("grid");
+    for (let i = 0, row; row = grid.rows[i]; i++) {
+
+        for (let j = 0, col; col = row.cells[j]; j++) {
+            col.style.backgroundColor=colorSelected;
+        }
+    }
+
+    //alert("Clicked Fill All")
 }
 
 function clearAll(){
-    alert("Clicked Clear All")
+        //reused the code from earlier but this time with "" for no color
+        let grid = document.getElementById("grid");
+        for (let i = 0, row; row = grid.rows[i]; i++) {
+    
+            for (let j = 0, col; col = row.cells[j]; j++) {
+                col.style.backgroundColor="";
+            }
+        }
+    //alert("Clicked Clear All")
 }
 
 function fillU(){
-    alert("Clicked Fill All Uncolored")
+    //reused the code once again, this time just adding a check
+    for (let i = 0, row; row = grid.rows[i]; i++) {
+
+        for (let j = 0, col; col = row.cells[j]; j++) {
+            if(col.style.backgroundColor===""){
+            col.style.backgroundColor=colorSelected;
+            }
+        }
+    }
+    //alert("Clicked Fill All Uncolored")
+
 }
