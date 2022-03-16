@@ -1,6 +1,10 @@
 let colorSelected; 
 
 //Adds a row
+
+th.onclick = function (){
+    this.style.backgroundColor = colorSelected;
+  };
 function addR() {
     //alert("Clicked Add Row")
     let grid = document.getElementById("grid");
@@ -117,6 +121,13 @@ function selected(){
     console.log(colorSelected);
 }
 
+//onclick will change color of any TD/cell
+function colorclick(event) { 
+	
+	if(event.target.nodeName==="TD"){
+  		event.target.style.backgroundColor=colorSelected;
+        }
+}
 function fill(){
     //simple loop going through every cell to change their style
     let grid = document.getElementById("grid");
